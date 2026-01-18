@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Lab</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- LameJS for MP3 encoding -->
+    <script src="https://cdn.jsdelivr.net/npm/lamejs@1.2.1/lame.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Audio Lab</h1>
+    </header>
+
+    <div class="card upload-section" id="upload-area">
+        <p>Drag & Drop audio here or click to upload</p>
+        <input type="file" id="file-input" accept="audio/*">
+    </div>
+
+    <div class="card player-section disabled" id="player-section">
+        <div class="playback-controls">
+            <button id="play-btn" class="btn-round">▶</button>
+            <button id="stop-btn" class="btn-round">■</button>
+            <span id="time-display">0:00 / 0:00</span>
+        </div>
+    </div>
+
+    <div class="card effects-section disabled" id="effects-section">
+        <h2>Effects</h2>
+        <div class="effects-grid">
+            <!-- Bass Boost -->
+            <div class="effect-control">
+                <label>Bass Boost</label>
+                <input type="range" id="bass-slider" min="0" max="100" value="0">
+                <span class="value">0%</span>
+            </div>
+
+            <!-- Bitcrusher -->
+            <div class="effect-control">
+                <label>Bitcrusher</label>
+                <input type="range" id="bitcrusher-slider" min="0" max="100" value="0">
+                <span class="value">0%</span>
+            </div>
+
+            <!-- Corrupter -->
+            <div class="effect-control">
+                <label>Corrupter</label>
+                <input type="range" id="corrupter-slider" min="0" max="100" value="0">
+                <span class="value">0%</span>
+            </div>
+
+            <!-- Distortion -->
+            <div class="effect-control">
+                <label>Distortion</label>
+                <input type="range" id="distortion-slider" min="0" max="100" value="0">
+                <span class="value">0%</span>
+            </div>
+
+            <!-- Echo -->
+            <div class="effect-control">
+                <label>Echo</label>
+                <input type="range" id="echo-slider" min="0" max="100" value="0">
+                <span class="value">0%</span>
+            </div>
+
+            <!-- Reverb -->
+            <div class="effect-control">
+                <label>Reverb</label>
+                <input type="range" id="reverb-slider" min="0" max="100" value="0">
+                <span class="value">0%</span>
+            </div>
+
+            <!-- Robotic -->
+            <div class="effect-control">
+                <label>Robotic</label>
+                <input type="range" id="robotic-slider" min="0" max="100" value="0">
+                <span class="value">0%</span>
+            </div>
+
+            <!-- Shallow -->
+            <div class="effect-control">
+                <label>Shallow</label>
+                <input type="range" id="shallow-slider" min="0" max="100" value="0">
+                <span class="value">0%</span>
+            </div>
+
+            <!-- Ambient -->
+            <div class="effect-control">
+                <label>Ambient</label>
+                <input type="range" id="ambient-slider" min="0" max="100" value="0">
+                <span class="value">0%</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="card download-section disabled" id="download-section">
+        <h2>Export</h2>
+        <div class="export-controls">
+            <div class="select-group">
+                <label>Format:</label>
+                <select id="export-format">
+                    <option value="wav">WAV</option>
+                    <option value="mp3">MP3</option>
+                </select>
+            </div>
+            <div class="select-group">
+                <label>Quality:</label>
+                <select id="export-rate">
+                    <option value="44100">44.1 kHz</option>
+                    <option value="32000">32.0 kHz</option>
+                    <option value="22050">22.05 kHz</option>
+                    <option value="11025">11.025 kHz</option>
+                </select>
+            </div>
+            <button id="download-btn" class="btn-pill">Download</button>
+        </div>
+    </div>
+
+</div>
+
+<div id="loading-overlay" class="hidden">
+    <div class="spinner"></div>
+    <p>Processing...</p>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

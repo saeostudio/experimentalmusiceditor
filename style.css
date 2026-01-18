@@ -1,0 +1,238 @@
+:root {
+    --bg-color: #f2f2f2;
+    --card-bg: #ffffff;
+    --text-color: #333333;
+    --accent-gray: #e0e0e0;
+    --button-gradient-start: #ffffff;
+    --button-gradient-end: #dcdcdc;
+    --highlight: #007aff; /* Classic blue highlight, or maybe stick to gray */
+}
+
+body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.container {
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+header h1 {
+    text-align: center;
+    font-weight: 300;
+    color: #444;
+    margin-bottom: 10px;
+}
+
+.card {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    border: 1px solid #d1d1d1;
+}
+
+.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+    filter: grayscale(100%);
+}
+
+/* Upload Section */
+.upload-section {
+    border: 2px dashed #ccc;
+    text-align: center;
+    cursor: pointer;
+    transition: background 0.2s;
+    position: relative;
+}
+
+.upload-section:hover {
+    background: #f9f9f9;
+}
+
+#file-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* Player Section */
+.player-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.playback-controls {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.btn-round {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid #aaa;
+    background: linear-gradient(to bottom, var(--button-gradient-start), var(--button-gradient-end));
+    cursor: pointer;
+    font-size: 14px;
+    color: #333;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-round:active {
+    background: linear-gradient(to top, var(--button-gradient-start), var(--button-gradient-end));
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+}
+
+/* Effects Section */
+.effects-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.effect-control {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.effect-control label {
+    font-size: 12px;
+    font-weight: bold;
+    color: #666;
+}
+
+.effect-control input[type=range] {
+    -webkit-appearance: none;
+    width: 100%;
+    background: transparent;
+}
+
+.effect-control input[type=range]:focus {
+    outline: none;
+}
+
+/* Chrome/Safari Slider Track */
+.effect-control input[type=range]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 6px;
+    cursor: pointer;
+    background: #eee;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+}
+
+/* Chrome/Safari Slider Thumb */
+.effect-control input[type=range]::-webkit-slider-thumb {
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    background: #fff;
+    border: 1px solid #999;
+    cursor: pointer;
+    -webkit-appearance: none;
+    margin-top: -6px; /* center thumb */
+    box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+
+.value {
+    font-size: 10px;
+    text-align: right;
+    color: #888;
+}
+
+/* Download Section */
+.export-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.select-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.select-group label {
+    font-size: 10px;
+    color: #666;
+    margin-bottom: 2px;
+}
+
+select {
+    padding: 5px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    background: linear-gradient(to bottom, #fff, #f9f9f9);
+    font-size: 12px;
+}
+
+.btn-pill {
+    padding: 8px 20px;
+    border-radius: 20px;
+    border: 1px solid #aaa;
+    background: linear-gradient(to bottom, var(--button-gradient-start), var(--button-gradient-end));
+    cursor: pointer;
+    font-weight: bold;
+    color: #333;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.btn-pill:active {
+    background: linear-gradient(to top, var(--button-gradient-start), var(--button-gradient-end));
+}
+
+/* Loading Overlay */
+.hidden {
+    display: none !important;
+}
+
+#loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255,255,255,0.8);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+.spinner {
+    width: 30px;
+    height: 30px;
+    border: 4px solid #ccc;
+    border-top: 4px solid #666;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 10px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
