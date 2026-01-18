@@ -110,6 +110,14 @@ function createEffectChain(ctx, source, destination, targetNodesObj) {
         const input = e.inputBuffer;
         const output = e.outputBuffer;
 
+        // Optimization: Bypass if bits are high (clean)
+        if (bitcrusher.params.bits >= 16) {
+            for (let channel = 0; channel < output.numberOfChannels; channel++) {
+                 output.getChannelData(channel).set(input.getChannelData(channel));
+            }
+            return;
+        }
+
         const step = Math.pow(0.5, bitcrusher.params.bits);
         const invStep = 1.0 / step;
         const normfreq = bitcrusher.params.normfreq;
@@ -152,10 +160,29 @@ function createEffectChain(ctx, source, destination, targetNodesObj) {
         const state = corrupter.glitchState;
         const memory = corrupter.memory;
 
+        // Optimization: Bypass if no intensity and not glitching
+        if (intensity === 0 && state.mode === 'none') {
+             for (let channel = 0; channel < output.numberOfChannels; channel++) {
+                 output.getChannelData(channel).set(input.getChannelData(channel));
+             }
+             // Still need to update memory for seamless transition if intensity rises
+             for (let i = 0; i < input.length; i++) {
+                for (let ch = 0; ch < 2; ch++) {
+                     if (input.numberOfChannels > ch) {
+                        memory[ch][corrupter.writePtr] = input.getChannelData(ch)[i];
+                     }
+                }
+                corrupter.writePtr = (corrupter.writePtr + 1) % memLen;
+             }
+             return;
+        }
+
         for (let i = 0; i < input.length; i++) {
             // Write to memory
             for (let ch = 0; ch < 2; ch++) {
-                memory[ch][corrupter.writePtr] = input.getChannelData(ch)[i];
+                 if (input.numberOfChannels > ch) {
+                    memory[ch][corrupter.writePtr] = input.getChannelData(ch)[i];
+                 }
             }
 
             if (state.counter > 0) {
@@ -300,6 +327,11 @@ function createEffectChain(ctx, source, destination, targetNodesObj) {
 // --- Helpers for Effects ---
 
 function cleanupNodes() {
+    if (nodes.master) {
+        try {
+            nodes.master.disconnect();
+        } catch(e) {}
+    }
     if (nodes.robotic && nodes.robotic.osc) {
         try {
             nodes.robotic.osc.stop();
